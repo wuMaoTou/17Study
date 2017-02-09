@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="event"
+            type="com.maotou.databindingstudy.moudle.EventListener"/>
+
+        <variable
+            name="str"
+            type="String"/>
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.maotou.databindingstudy.MainActivity">
+
+        <TextView
+            android:id="@+id/tv_click1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{event.onClick1}"
+            android:text="事件绑定写法1" />
+
+        <TextView
+            android:id="@+id/tv_click2"
+            android:layout_below="@+id/tv_click1"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{event::onClick2}"
+            android:text="事件绑定写法2" />
+
+        <TextView
+            android:id="@+id/tv_click3"
+            android:layout_below="@+id/tv_click2"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view)->event.onClick3(view,str)}"
+            android:text="事件绑定写法3" />
+    </RelativeLayout>
+</layout>
