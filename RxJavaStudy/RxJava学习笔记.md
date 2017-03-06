@@ -288,9 +288,15 @@ RxJava提供了很多实用的操作符。
 转换数据:
 
 * map:变换 Flowable 然后返回一个指定类型的 Flowable 对象
-* cast：用来把一个对象强制转换为子类型
-* ofType：用来判断数据是否为 该类型，如果不是则跳过这个数据
-* timestamp：timestamp 
+* cast：把一个对象强制转换为指定子类型
+* ofType：判断数据是否为该类型，如果不是则跳过这个数据
+* timestamp：把数据转换为 Timestamped 类型，里面包含了原始的数据和一个原始数据是何时发射的时间戳
+* timeInterval：把数据转换为 TimeInterval 类型，里面包含了原始的数据和前一个数据和当前数据发射直接的时间间隔
+* materialize：materialize 对于记录日志也是很有用的，materialize 把数据转换为元数据发射出去，元数据中包含了源 Observable 所发射的动作
+* dematerialize：把 materialize 转换后的Observable 再还原为源Observable
+* flatMap：把源 Observable 中的一个数据转换为一个新的 Observable发射出去
+* concatMap：把源 Observable 中的一个数据转换为一个新的 Observable发射出去，但是不会把数据交织在一起发射（队列顺序发射）
+* flatMapIterable：flatMapIterable 和 flatMap 类似，区别是 flatMapIterable 参数把一个数据转换为一个新的 iterable 对象；flatMapIterable 还有另外一个重载函数可以用源 Observable 发射的数据来处理新的 iterable 中的每个数据
 
 
 
