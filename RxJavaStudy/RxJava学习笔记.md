@@ -7,7 +7,7 @@ RxJava是一个实现反应性扩展框架的Java虚拟机：用于通过使用�
 
 简单来说RxJava就是一个实现异步操作的库
 
-RxJava 有四个基本概念：`Observable` (可观察者，即被观察者)`、`Observer `(观察者)、 `subscribe` (订阅)、事件。`Observable `和 `Observer `通过 `subscribe()` 方法实现订阅关系，从而 Observable 可以在需要的时候发出事件来通知 `Observer`,RxJava2.0开始最核心的是`publisher`和`Subscriber`.`Publisher`可以发出一系列的事件,而Subscriber负责和处理这些事件
+RxJava 有四个基本概念：`Observable (可观察者，即被观察者)`、`Observer (观察者)`、 `subscribe (订阅)`、事件。`Observable `和 `Observer `通过 `subscribe()` 方法实现订阅关系，从而 Observable 可以在需要的时候发出事件来通知 `Observer`,RxJava2.0开始最核心的是`publisher`和`Subscriber`.`Publisher`可以发出一系列的事件,而Subscriber负责和处理这些事件
 与传统观察者模式不同， RxJava 的事件回调方法除了普通事件 onNext() （相当于 onClick() / onEvent()）之外，还定义了两个特殊的事件：onCompleted() 和 onError()。
 >onCompleted(): 事件队列完结。RxJava 不仅把每个事件单独处理，还会把它们看做一个队列。RxJava 规定，当不会再有新的 onNext() 发出时，需要触发 onCompleted() 方法作为标志。
 onError(): 事件队列异常。在事件处理过程中出异常时，onError() 会被触发，同时队列自动终止，不允许再有事件发出。
@@ -247,7 +247,6 @@ RxJava提供了很多实用的操作符。
 
 过滤数据:
 
-* map:变换 Flowable 然后返回一个指定类型的 Flowable 对象
 * filter:使用predicate 函数接口来判断每个发射的值是否能通过这个判断。如果返回 true，则该数据继续往下一个（过滤后的） Observable 发射
 * distinct:用来过滤掉已经出现过的数据(重载函数,用Function指定对比条件)
 * distinctUntilChanged:distinct的变体,过滤相邻的key一样的数据
@@ -286,6 +285,12 @@ RxJava提供了很多实用的操作符。
 * toMultimap:通常情况下多个 value 的 key 可能是一样的。 一个 key 可以映射多个 value 的数据结构为 multimap，multimap 的 value 为一个集合
 * groupBy: toMultimap 函数的 Rx 方式的实现
 
+转换数据:
+
+* map:变换 Flowable 然后返回一个指定类型的 Flowable 对象
+* cast：用来把一个对象强制转换为子类型
+* ofType：用来判断数据是否为 该类型，如果不是则跳过这个数据
+* timestamp：timestamp 
 
 
 

@@ -32,7 +32,7 @@ import io.reactivex.internal.operators.flowable.FlowableJust;
  */
 public class CreateEventStreamList extends AppCompatActivity {
 
-    private String TAG = ">>>>>RxJava 2.0<<<<<";
+    public static final String TAG = "RxJava";
     private ActivityMainBinding mainBinding;
     public String[] menu = new String[]{"just", "empty", "error", "defer", "range", "interval", "timer","form"};
     public static final int JUST = 0;

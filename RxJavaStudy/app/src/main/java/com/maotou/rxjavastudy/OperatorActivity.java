@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.maotou.rxjavastudy.databinding.ActivityMainBinding;
+import com.maotou.rxjavastudy.databinding.ActivityOperatorBinding;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -41,108 +44,154 @@ import io.reactivex.internal.operators.flowable.FlowableJust;
  */
 public class OperatorActivity extends AppCompatActivity {
 
-    private String TAG = ">>>>>RxJava 2.0<<<<<";
-    private ActivityMainBinding mainBinding;
-    public String[] menu = new String[]{"map", "filter", "distinct", "distinctUntilChanged", "ignoreElements", "take", "skip", "all"
-            , "exists", "contains", "defaultIfEmpty", "elementAt", "sequenceEqual", "reduce", "scan", "collect", "toList", "toSortedList"
-            , "toMap", "toMultimap","groupBy"};
+    private String TAG = "RxJava";
+    private ActivityOperatorBinding mainBinding;
+
+    public String[] menu = { "过滤数据操作符", "检查数据操作符", "聚合操作符","转换数据操作符" };
+    public String[][] operators = {{"filter", "distinct", "distinctUntilChanged", "ignoreElements", "take", "skip"},{ "all"
+            , "exists", "contains", "defaultIfEmpty", "elementAt", "sequenceEqual"},{ "reduce", "scan", "collect", "toList", "toSortedList"
+            , "toMap", "toMultimap","groupBy"},{"map", "cast","ofType "}};
+
+    public static final int FILTER = 0;
+    public static final int DISTINCT = 1;
+    public static final int DISTINCTUNTILCHANGED = 2;
+    public static final int IGNOREELEMENTS = 3;
+    public static final int TAKE = 4;
+    public static final int SKIP = 5;
+
+    public static final int ALL = 0;
+    public static final int EXISTS = 1;
+    public static final int CONTAINS = 2;
+    public static final int DEFAULTIFEMPTY = 3;
+    public static final int ELEMENTAT = 4;
+    public static final int SEQUENCEEQUAL = 5;
+
+    public static final int REDUCE = 0;
+    public static final int SCAN = 1;
+    public static final int COLLECT = 2;
+    public static final int TOLIST = 3;
+    public static final int TOSORTEDLIST = 4;
+    public static final int TOMAP = 5;
+    public static final int TOMULTIMAP = 6;
+    public static final int GROUPBY = 7;
+
     public static final int MAP = 0;
-    public static final int FILTER = 1;
-    public static final int DISTINCT = 2;
-    public static final int DISTINCTUNTILCHANGED = 3;
-    public static final int IGNOREELEMENTS = 4;
-    public static final int TAKE = 5;
-    public static final int SKIP = 6;
-    public static final int ALL = 7;
-    public static final int EXISTS = 8;
-    public static final int CONTAINS = 9;
-    public static final int DEFAULTIFEMPTY = 10;
-    public static final int ELEMENTAT = 11;
-    public static final int SEQUENCEEQUAL = 12;
-    public static final int REDUCE = 13;
-    public static final int SCAN = 14;
-    public static final int COLLECT = 15;
-    public static final int TOLIST = 16;
-    public static final int TOSORTEDLIST = 17;
-    public static final int TOMAP = 18;
-    public static final int TOMULTIMAP = 19;
-    public static final int GROUPBY = 20;
+    public static final int CAST = 1;
+    public static final int OFTYPE  = 2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainBinding.listview.setAdapter(new OperatorActivity.MyAdapter());
-        mainBinding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_operator);
+        mainBinding.exlistview.setAdapter(new MyAdapter());
+
+        mainBinding.exlistview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case MAP:
-                        map();
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                switch (groupPosition){
+                    case 0:
+                        switch (childPosition) {
+                            case FILTER:
+                                filter();
+                                break;
+                            case DISTINCT:
+                                distinct();
+                                break;
+                            case DISTINCTUNTILCHANGED:
+                                distinctUntilChanged();
+                                break;
+                            case IGNOREELEMENTS:
+                                ignoreElements();
+                                break;
+                            case TAKE:
+                                take();
+                                break;
+                            case SKIP:
+                                skip();
+                                break;
+                        }
                         break;
-                    case FILTER:
-                        filter();
+                    case 1:
+                        switch (childPosition) {
+                            case ALL:
+                                all();
+                                break;
+                            case EXISTS:
+                                exists();
+                                break;
+                            case CONTAINS:
+                                contains();
+                                break;
+                            case DEFAULTIFEMPTY:
+                                defaultIfEmpty();
+                                break;
+                            case ELEMENTAT:
+                                elementAt();
+                                break;
+                            case SEQUENCEEQUAL:
+                                sequenceEqual();
+                                break;
+                        }
                         break;
-                    case DISTINCT:
-                        distinct();
+                    case 2:
+                        switch (childPosition) {
+                            case REDUCE:
+                                reduce();
+                                break;
+                            case SCAN:
+                                scan();
+                                break;
+                            case COLLECT:
+                                collect();
+                                break;
+                            case TOLIST:
+                                toList();
+                                break;
+                            case TOSORTEDLIST:
+                                toSortedList();
+                                break;
+                            case TOMAP:
+                                toMap();
+                                break;
+                            case TOMULTIMAP:
+                                toMultimap();
+                                break;
+                            case GROUPBY:
+                                groupBy();
+                                break;
+                        }
                         break;
-                    case DISTINCTUNTILCHANGED:
-                        distinctUntilChanged();
-                        break;
-                    case IGNOREELEMENTS:
-                        ignoreElements();
-                        break;
-                    case TAKE:
-                        take();
-                        break;
-                    case SKIP:
-                        skip();
-                        break;
-                    case ALL:
-                        all();
-                        break;
-                    case EXISTS:
-                        exists();
-                        break;
-                    case CONTAINS:
-                        contains();
-                        break;
-                    case DEFAULTIFEMPTY:
-                        defaultIfEmpty();
-                        break;
-                    case ELEMENTAT:
-                        elementAt();
-                        break;
-                    case SEQUENCEEQUAL:
-                        sequenceEqual();
-                        break;
-                    case REDUCE:
-                        reduce();
-                        break;
-                    case SCAN:
-                        scan();
-                        break;
-                    case COLLECT:
-                        collect();
-                        break;
-                    case TOLIST:
-                        toList();
-                        break;
-                    case TOSORTEDLIST:
-                        toSortedList();
-                        break;
-                    case TOMAP:
-                        toMap();
-                        break;
-                    case TOMULTIMAP:
-                        toMultimap();
-                        break;
-                    case GROUPBY:
-                        groupBy();
+                    case  3:
+                        switch (childPosition) {
+                            case MAP:
+                                map();
+                                break;
+                            case CAST:
+                                cast();
+                                break;
+                            case OFTYPE :
+                                ofType();
+                                break;
+                        }
                         break;
                 }
+                return false;
             }
         });
+    }
+
+    private void ofType() {
+        Flowable.just(0,1,"2",3)
+                .ofType(Integer.class)
+                .subscribe(new MySubscriber());
+    }
+
+    private void cast() {
+        Flowable.just(0,1,2,"3")
+                .cast(Integer.class)
+                .subscribe(new MySubscriber());
     }
 
     private void groupBy() {
@@ -848,32 +897,65 @@ public class OperatorActivity extends AppCompatActivity {
 
     }
 
-    class MyAdapter extends BaseAdapter {
-
+    public class MyAdapter extends BaseExpandableListAdapter {
         @Override
-        public int getCount() {
-            return menu.length;
+        public int getGroupCount() {
+            return operators.length;
         }
 
         @Override
-        public Object getItem(int position) {
-            return menu[position];
+        public int getChildrenCount(int groupPosition) {
+            return operators[groupPosition].length;
         }
 
         @Override
-        public long getItemId(int position) {
-            return position;
+        public Object getGroup(int groupPosition) {
+            return menu[groupPosition];
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public Object getChild(int groupPosition, int childPosition) {
+            return operators[groupPosition][childPosition];
+        }
 
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = new TextView(OperatorActivity.this);
-            textView.setText(menu[position]);
+            textView.setText(menu[groupPosition]);
+            int padding = 30;
+            textView.setPadding(padding+100, padding, padding, padding);
+
+            return textView;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            TextView textView = new TextView(OperatorActivity.this);
+            textView.setText(operators[groupPosition][childPosition]);
             int padding = 30;
             textView.setPadding(padding, padding, padding, padding);
 
             return textView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
         }
     }
 }

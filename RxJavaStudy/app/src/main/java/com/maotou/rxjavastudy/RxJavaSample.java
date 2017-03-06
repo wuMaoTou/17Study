@@ -27,7 +27,7 @@ import io.reactivex.functions.Function;
 
 public class RxJavaSample extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = ">>>>>RxJava 2.0<<<<<";
+    private String TAG = "RxJava";
 
     private TextView tv;
     private ActivitySampleBinding mBinding;
