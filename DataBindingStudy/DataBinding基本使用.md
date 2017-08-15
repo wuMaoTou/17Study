@@ -34,12 +34,18 @@
 * [绑定List/Map等集合数据](#3.10)
 * [Observable自动更新](#3.11)
 * [Databinding与include标签的结合](#3.12)
-* [DataBinding与RecyclerVIew的结合](#3.13)
 
 
 #####<h id="3.1">3.1摆脱findVIewById<h>
 布局通过DataBindingUtils.setContentView(context,rid)加载到代码中，而且会生成对应一个Binding对象，对象名是布局文件文称加上Binding后缀,通过Binding对象.id名称，就能相当于拿到了指定的布局中的id的控件了，使用起来和findviewbyid获取的控件是一样的
-
+Fragment中的使用:DataBinding库还提供了另外一个初始化布局的方法：DataBindingUtil.inflate()。
+```java
+@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_blank,container,false);
+        return binding.getRoot();
+    }
+```
 
 #####<h id="3.2">3.2绑定基本数据类型及String<h>
 在`<layout>`下加多一个和我们展示布局同级的根标签`<data>`,用于定义我们的数据的名称和类型
@@ -467,7 +473,7 @@ public class Animal {
     public final ObservableField<String> field = new ObservableField<>();
     public final ObservableInt age = new ObservableInt();
 }
-``
+```
 
 #####<h id='3.12'>3.12 Databinding与include标签的结合<h>
 主布局文件

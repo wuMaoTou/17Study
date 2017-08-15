@@ -1,4 +1,4 @@
-#RxJava2.0使用
+#RxJava2.0基本使用
 
 ###1.RxJava介绍和原理简析
 RxJava是一个实现反应性扩展框架的Java虚拟机：用于通过使用观察序列构成异步和基于事件的程序库。
@@ -20,7 +20,7 @@ RxJava2.0中平常用的最多的`Publisher`是`Flowable`.`Flowable`是2.0新增
 compile 'io.reactivex.rxjava2:rxjava:2.0.0'
 compile 'org.reactivestreams:reactive-streams:1.0.0'
 ```
-###2.RxJava的基本实现
+###2.RxJava的使用
 ####基本使用
 创建Subscriber(2.0)/Observer(2.0)
 ```java
@@ -304,7 +304,7 @@ RxJava提供了很多实用的操作符。
 
 
 资料来源:[RxJava入门专栏](http://blog.csdn.net/column/details/rxjava.html)
-
+[ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
 
 
 
