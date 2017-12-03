@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--添加clickable属性为true避免下层的Toolbar响应点击事件-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <TextView
+        android:id="@+id/tv_start"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="开始"
+        android:layout_centerVertical="true"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/tv_stop"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_centerVertical="true"
+        android:text="暂停"
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp" />
+    <!-- 波纹 -->
+
+      <com.maotou.recordviewdemo.RecordWaveBaseView
+          android:id="@+id/newDotWave"
+          android:layout_width="wrap_content"
+          android:layout_toRightOf="@id/tv_start"
+          android:layout_toLeftOf="@id/tv_stop"
+          android:layout_height="72dp"
+          android:background="#75b8fe"/>
+
+
+    <!--<com.shuyu.app.CursorView-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_alignBaseline="@id/newDotWave"-->
+        <!--android:layout_marginLeft="7dp"-->
+        <!--android:layout_alignLeft="@id/newDotWave"/>-->
+
+
+
+</RelativeLayout>
