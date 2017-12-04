@@ -288,8 +288,13 @@ public class RecordWaveBaseView extends View {
                             //画刻度
                             if (drawList.get(i).get(KEY_TIME)%120 == 0) {
                                 mBackCanVans.drawLine(startMargin + i * mScaleMargin, topMargin, startMargin + i * mScaleMargin, topMargin + mScaleMaxHeight, mScalePaint);
-                                if (drawList.get(i).get(KEY_TIME) != 0)
-                                    mBackCanVans.drawText(sdf1.format(new Date(drawList.get(i).get(KEY_TIME) * 500)), startMargin + i * mScaleMargin + dip2px(context, 5), topMargin + mScaleMaxHeight + dip2px(context, 3), mGrainPaint);
+                                if (drawList.get(i).get(KEY_TIME) != 0) {
+                                    mBackCanVans.drawText(
+                                        sdf1.format(new Date(drawList.get(i).get(KEY_TIME) * 500)),
+                                        startMargin + i * mScaleMargin + dip2px(context, 5),
+                                        topMargin + mScaleMaxHeight + dip2px(context, 3),
+                                        mGrainPaint);
+                                }
                             } else if (drawList.get(i).get(KEY_TIME) % 20 == 0) {
                                 mBackCanVans.drawLine(startMargin + i * mScaleMargin, topMargin, startMargin + i * mScaleMargin, topMargin + mScaleHeight, mScalePaint);
                             }
@@ -306,18 +311,18 @@ public class RecordWaveBaseView extends View {
                             }
                         }
 
-                        for (int i = dataList.size(); i< maxSize; i++){
+                        for (int i = drawList.size(); i< maxSize; i++){
                             memory++;
                             //画刻度
                             if (memory % 120 == 0) {
 
-                                Log.e("&dataList.size()", dataList.size()+"");
-                                Log.e("*********memory=", memory + "");
-                                Log.e("*********startX=", startMargin + i * mScaleMargin + "");
-
                                 mBackCanVans.drawLine(startMargin + i * mScaleMargin, topMargin, startMargin + i * mScaleMargin, topMargin + mScaleMaxHeight, mScalePaint);
-                                if (memory != 0)
-                                    mBackCanVans.drawText(sdf1.format(new Date(memory * 500)), startMargin + i * mScaleMargin + dip2px(context, 5), topMargin + mScaleMaxHeight + dip2px(context, 3), mGrainPaint);
+                                if (memory != 0) {
+                                    mBackCanVans.drawText(sdf1.format(new Date(memory * 500)),
+                                        startMargin + i * mScaleMargin + dip2px(context, 5),
+                                        topMargin + mScaleMaxHeight + dip2px(context, 3),
+                                        mGrainPaint);
+                                }
                             } else if (memory % 20 == 0) {
                                 mBackCanVans.drawLine(startMargin + i * mScaleMargin, topMargin, startMargin + i * mScaleMargin, topMargin + mScaleHeight, mScalePaint);
                             }
