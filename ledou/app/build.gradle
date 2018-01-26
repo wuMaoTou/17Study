@@ -33,6 +33,6 @@ dependencies {
     compile 'org.jetbrains.anko:anko-common:0.8.2'
     compile group: 'org.json', name: 'json', version: '20171018'
     // RxJava
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
+//    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+//    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
 }

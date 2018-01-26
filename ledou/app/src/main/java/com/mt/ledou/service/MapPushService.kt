@@ -27,7 +27,6 @@ class MapPushService {
         if (TextUtils.isEmpty(respone.text)) {
             return
         }
-
         LogUtils.d("[历练-初始化]---" + respone.text)
         val curdup = respone.jsonObject.getJSONObject("userinfo").getInt("curdup")
         val curlevel = respone.jsonObject.getJSONObject("userinfo").getJSONObject("info").getInt("curlevel")

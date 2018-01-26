@@ -20,8 +20,13 @@ class MainActivity : AppCompatActivity() {
 //                async { MapPushService().init() }
                 val t = Thread(Runnable {
                     kotlin.run {
+                        //好友挑战
+                        SnsService().init()
+                        //历练
                         MapPushService().init()
+                        //王者争霸
                         QualifyingService().init()
+                        //黄金转盘
                         TurntableService().init()
                     }
                 })
@@ -74,42 +79,4 @@ class MainActivity : AppCompatActivity() {
         return true;
     }
 
-//    fun zaofang() {
-//        async {
-//            val readText = URL("https://zone4.ledou.qq.com/fcgi-bin/petpk?" +
-//                    "cmd=meridian&op=visit&id=${npcid}&uid=469304&uin=null&skey=null" +
-//                    "&h5openid=oKIwA0Vr_K8bwu1tjNiLIgsg3m_A&h5token=370675a48b30dab6ef809e0ba94c9de8&pf=wx2")
-//                    .readText()
-//
-//            val bean = Gson().fromJson(readText, zaofangbean::class.java)
-//
-//            Log.d("MainActivity", readText)
-//
-//            if (bean.result == 0) {
-//                zaofang = (bean.result == 0);
-//
-//                npcid = bean.act_npc
-//
-//                list.add(readText)
-//
-////                uiThread { adapter.notifyDataSetChanged() }
-//            }
-//        }
-//    }
-//
-//    fun init() {
-//        async {
-//            val readText = URL("https://zone4.ledou.qq.com/fcgi-bin/petpk?" +
-//                    "cmd=meridian&op=visitpage&uid=469304&uin=null&skey=null" +
-//                    "&h5openid=oKIwA0Vr_K8bwu1tjNiLIgsg3m_A&h5token=370675a48b30dab6ef809e0ba94c9de8&pf=wx2")
-//                    .readText()
-//
-//            val bean = Gson().fromJson(readText, initbean::class.java)
-//            Log.d("MainActivity", readText)
-//            if (bean.result == 0) {
-//                npcid = bean.act_npc
-//            }
-//
-//        }
-//    }
 }
