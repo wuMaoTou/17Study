@@ -1,8 +1,13 @@
 package com.mt.ledou.service
 
 import android.text.TextUtils
+import com.mt.ledou.Contacts
+import com.mt.ledou.EventCenter
 import com.mt.ledou.Request
 import com.mt.ledou.utils.LogUtils
+import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.jetbrains.anko.toast
 
 /**
  * Created by wuchundu on 18-1-26.
@@ -12,10 +17,14 @@ class MapPushService {
 
 
     fun init() {
-
-        normal()
-        Thread.sleep(200);
-        heroic();
+        try {
+            normal()
+            Thread.sleep(200);
+            heroic();
+        } catch (e: Exception) {
+            e.printStackTrace()
+            EventBus.getDefault().post(EventCenter(Contacts.CATCH_EVENT))
+        }
     }
 
     /**
@@ -67,9 +76,9 @@ class MapPushService {
             LogUtils.d("[历练-PK]---" + respone.text)
             val result = respone.jsonObject.getInt("result")
             if (result == 100 && mapPushLimit()) {
-                if (mapPushStorage()){
+                if (mapPushStorage()) {
                     continue
-                }else{
+                } else {
                     break
                 }
             }

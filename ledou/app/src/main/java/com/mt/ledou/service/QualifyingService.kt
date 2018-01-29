@@ -1,8 +1,11 @@
 package com.mt.ledou.service
 
 import android.text.TextUtils
+import com.mt.ledou.Contacts
+import com.mt.ledou.EventCenter
 import com.mt.ledou.Request
 import com.mt.ledou.utils.LogUtils
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by wuchundu on 18-1-26.
@@ -11,9 +14,14 @@ import com.mt.ledou.utils.LogUtils
 class QualifyingService {
 
     fun init() {
-        personal()
-        teamqua()
+        try {
+            personal()
+            teamqua()
 //        shop()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            EventBus.getDefault().post(EventCenter(Contacts.CATCH_EVENT))
+        }
     }
 
     private fun teamqua() {

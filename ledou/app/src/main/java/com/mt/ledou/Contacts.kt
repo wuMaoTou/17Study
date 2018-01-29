@@ -12,4 +12,6 @@ object Contacts {
     var BASE_URL = "https://zone4.ledou.qq.com/fcgi-bin/petpk?"
 
     var TOKEN_PARAMS = mutableMapOf<String,String>();
+
+    var CATCH_EVENT = 101;
 }
