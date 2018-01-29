@@ -17,4 +17,9 @@
         android:padding="20dp"
         android:text="start" />
 
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

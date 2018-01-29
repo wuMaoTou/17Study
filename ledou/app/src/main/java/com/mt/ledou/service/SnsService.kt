@@ -35,7 +35,7 @@ class SnsService {
      */
     private fun snsFight(friendlist: JSONArray, type: Int, typeName: String) {
         var fightNum = 0;
-        for (i in 0..friendlist.length()) {
+        for (i in 0..friendlist.length()-1) {
             fightNum++
             if (fightNum > 15) {
                 break
@@ -66,13 +66,13 @@ class SnsService {
         }
         LogUtils.d("[获取体力药水信息]---" + respone.text)
         val limit_info = respone.jsonObject.getJSONArray("limit_info")
-        for (i in 0..limit_info.length()) {
+        for (i in 0..limit_info.length()-1) {
             val jsonObject = limit_info.get(i) as JSONObject
             val limit = jsonObject.getInt("limit")
             val Goods = jsonObject.getString("Goods")
             if (limit > 0) {
-                val respone = Request.request("storage", "cmd=storage&op=use&id=${Goods}")
-                LogUtils.d("[使用体力药水]---" + respone.text)
+                val limitRespone = Request.request("storage", "cmd=storage&op=use&id=${Goods}")
+                LogUtils.d("[使用体力药水]---" + limitRespone.text)
             }
         }
         return true;

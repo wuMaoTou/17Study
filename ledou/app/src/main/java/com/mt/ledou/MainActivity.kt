@@ -6,6 +6,7 @@ import android.text.TextUtils
 import com.mt.ledou.service.MapPushService
 import com.mt.ledou.service.QualifyingService
 import com.mt.ledou.service.TurntableService
+import com.mt.ledou.service.VisitService
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.onUiThread
 import org.jetbrains.anko.toast
@@ -18,16 +19,43 @@ class MainActivity : AppCompatActivity() {
         start.setOnClickListener {
             if (getUserToken(edittext.text.toString())) {
 //                async { MapPushService().init() }
+                start.setEnabled(false)
                 val t = Thread(Runnable {
                     kotlin.run {
-                        //好友挑战
-                        SnsService().init()
-                        //历练
-                        MapPushService().init()
-                        //王者争霸
-                        QualifyingService().init()
-                        //黄金转盘
-                        TurntableService().init()
+                        try {
+                            //好友挑战
+                            SnsService().init()
+                            runOnUiThread {
+                                info.text = "完成好友挑战\n"
+                            }
+                            //历练
+                            MapPushService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成历练\n"
+                            }
+                            //王者争霸
+                            QualifyingService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成王者争霸\n"
+                            }
+                            //造访
+                            VisitService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成造访\n"
+                            }
+                            //黄金转盘
+                            TurntableService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成黄金转盘\n"
+                                start.setEnabled(true)
+                            }
+                        } catch (e : Exception) {
+                            runOnUiThread {
+                                e.printStackTrace()
+                                toast(e.toString())
+                                start.setEnabled(true)
+                            }
+                        }
                     }
                 })
                 t.start()
@@ -71,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             Contacts.BASE_URL = "https://zone3.ledou.qq.com/" + Contacts.DOMAIN
         } else {
             onUiThread {
-                toast("获取用户uid失败")
+                toast("获取主机链接失败")
             }
             return false;
         }

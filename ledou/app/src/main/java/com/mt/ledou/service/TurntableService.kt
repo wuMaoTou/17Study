@@ -19,8 +19,8 @@ class TurntableService {
         val daynum = respone.jsonObject.getInt("daynum")
 
         for (i in 0..daynum) {
-            val respone = Request.request("activity", "cmd=activity&aid=24&sub=1")
-            LogUtils.d("[黄金转盘-启动转盘]---" + respone.text)
+            val activityRespone = Request.request("activity", "cmd=activity&aid=24&sub=1")
+            LogUtils.d("[黄金转盘-启动转盘]---" + activityRespone.text)
             Thread.sleep(200)
         }
     }

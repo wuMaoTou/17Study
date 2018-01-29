@@ -1,5 +1,6 @@
 package com.mt.ledou
 
+import android.widget.Toast
 import com.mt.ledou.utils.LogUtils
 import khttp.get
 import khttp.post
@@ -21,8 +22,13 @@ object Request {
         val response  = get(url)
         val result = response.jsonObject.getInt("result")
         if (result != 0) {
-            LogUtils.d("[执行出现异常]", "url---{${url}}\n params---{${data}}\n response---{${response}}")
-            return response
+            if (result == 110) {
+                LogUtils.d("很抱歉，鉴权失败，请退出重试！")
+                return response
+            }else{
+                LogUtils.d("[执行出现异常]", "url---{${url}}\n params---{${data}}\n response---{${response}}")
+                return response
+            }
         }
         return response
     }
