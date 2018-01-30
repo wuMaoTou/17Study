@@ -37,7 +37,7 @@ import java.util.HashSet
 class MainActivity : AppCompatActivity() {
 
     lateinit var receiver: Receiver
-    lateinit var dialog : ProgressDialog
+    lateinit var dialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,21 +48,25 @@ class MainActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         start.setOnClickListener {
             if (getUserToken(edittext.text.toString())) {
-//                async { MapPushService().init() }
+                info.setText("")
                 start.setEnabled(false)
                 dialog.show()
                 val t = Thread(Runnable {
                     kotlin.run {
                         //                        try {
                         //好友挑战
-                        SnsService().init()
-                        runOnUiThread {
-                            info.text = "完成好友挑战\n"
+                        if (cb_sns.isChecked) {
+                            SnsService().init()
+                            runOnUiThread {
+                                info.text = "完成好友挑战\n"
+                            }
                         }
                         //历练
-                        MapPushService().init()
-                        runOnUiThread {
-                            info.text = info.text.toString() + "完成历练\n"
+                        if (cb_map_push.isChecked) {
+                            MapPushService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成历练\n"
+                            }
                         }
                         //王者争霸
                         QualifyingService().init()

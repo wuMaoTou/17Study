@@ -5,22 +5,37 @@
     android:orientation="vertical">
 
     <TextView
-        android:padding="10dp"
-        android:text="1.启动app安装证书用于拦截https请求\n2.开启大乐斗,完成启动到乐斗主页面\n3.返回本页点击获取token\n4.获取token成功后开启辅助"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="1.启动app安装证书用于拦截https请求\n2.重启大乐斗,完成启动到乐斗主页面\n3.返回本页点击获取token\n4.获取token成功后开启辅助" />
 
     <Button
         android:id="@+id/bt_get_token"
-        android:text="获取token"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="获取token" />
+
+    <CheckBox
+        android:layout_marginTop="10dp"
+        android:id="@+id/cb_sns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否开启挑战好友" />
+
+    <CheckBox
+        android:id="@+id/cb_map_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否开启自动历练" />
 
     <EditText
-        android:layout_marginTop="10dp"
         android:id="@+id/edittext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/start"
