@@ -43,10 +43,6 @@ class App : Application() {
         val instance: App by lazy {
             instanceTmp!!
         }
-
-        fun toast(msg: String) {
-            Toast.makeText(instanceTmp!!.applicationContext, msg, Toast.LENGTH_SHORT).show()
-        }
     }
 
     fun initProxy() {

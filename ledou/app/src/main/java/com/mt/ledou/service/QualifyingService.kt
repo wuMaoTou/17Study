@@ -16,14 +16,17 @@ class QualifyingService {
     fun init() {
         try {
             personal()
-            teamqua()
-//        shop()
+//            teamqua()
+//            shop()
         } catch (e: Exception) {
             e.printStackTrace()
             EventBus.getDefault().post(EventCenter(Contacts.CATCH_EVENT))
         }
     }
 
+    /**
+     * 王者组队赛
+     */
     private fun teamqua() {
 
         val respone = Request.request("teamqua", "cmd=teamqua")
@@ -52,7 +55,6 @@ class QualifyingService {
 
     /**
      * 个人争霸赛
-     * @return bool
      */
     private fun personal() {
 
