@@ -16,7 +16,7 @@ class QualifyingService {
     fun init() {
         try {
             personal()
-//            teamqua()
+            teamqua()
 //            shop()
         } catch (e: Exception) {
             e.printStackTrace()

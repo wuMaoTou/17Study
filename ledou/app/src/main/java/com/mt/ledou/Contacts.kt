@@ -14,4 +14,6 @@ object Contacts {
     var TOKEN_PARAMS = mutableMapOf<String,String>();
 
     var CATCH_EVENT = 101;
+
+    var TEAM_QUA = false;
 }

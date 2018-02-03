@@ -53,14 +53,14 @@ class MainActivity : AppCompatActivity() {
                 dialog.show()
                 val t = Thread(Runnable {
                     kotlin.run {
-                        //                        try {
                         //好友挑战
                         if (cb_sns.isChecked) {
                             SnsService().init()
                             runOnUiThread {
-                                info.text = "完成好友挑战\n"
+                                info.text = info.text.toString() + "完成好友挑战\n"
                             }
                         }
+
                         //历练
                         if (cb_map_push.isChecked) {
                             MapPushService().init()
@@ -68,30 +68,35 @@ class MainActivity : AppCompatActivity() {
                                 info.text = info.text.toString() + "完成历练\n"
                             }
                         }
-                        //王者争霸
-                        QualifyingService().init()
-                        runOnUiThread {
-                            info.text = info.text.toString() + "完成王者争霸\n"
+
+                        if (cb_qualifying.isChecked) {
+                            //王者争霸
+                            QualifyingService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成王者争霸\n"
+                            }
                         }
-                        //造访
-                        VisitService().init()
-                        runOnUiThread {
-                            info.text = info.text.toString() + "完成造访\n"
+
+                        if (cb_visit.isChecked) {
+                            //造访
+                            VisitService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成造访\n"
+                            }
                         }
-                        //黄金转盘
-                        TurntableService().init()
+
+                        if (cb_turntable.isChecked) {
+                            //黄金转盘
+                            TurntableService().init()
+                            runOnUiThread {
+                                info.text = info.text.toString() + "完成黄金转盘\n"
+                            }
+                        }
+
                         runOnUiThread {
-                            info.text = info.text.toString() + "完成黄金转盘\n"
                             start.setEnabled(true)
                             dialog.dismiss()
                         }
-//                        } catch (e : Exception) {
-//                            runOnUiThread {
-//                                e.printStackTrace()
-//                                toast(e.toString())
-//                                start.setEnabled(true)
-//                            }
-//                        }
                     }
                 })
                 t.start()
@@ -99,6 +104,9 @@ class MainActivity : AppCompatActivity() {
         }
         bt_get_token.setOnClickListener() {
             filter()
+        }
+        cb_team_qualifying.setOnCheckedChangeListener(){
+            buttonView, isChecked -> Contacts.TEAM_QUA = isChecked
         }
     }
 

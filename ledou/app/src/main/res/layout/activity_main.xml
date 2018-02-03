@@ -17,10 +17,10 @@
         android:text="获取token" />
 
     <CheckBox
-        android:layout_marginTop="10dp"
         android:id="@+id/cb_sns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:checked="true"
         android:text="是否开启挑战好友" />
 
@@ -30,6 +30,34 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:text="是否开启自动历练" />
+
+    <CheckBox
+        android:id="@+id/cb_visit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否开启自动造访" />
+
+    <CheckBox
+        android:id="@+id/cb_qualifying"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否开启王者争霸" />
+
+    <CheckBox
+        android:id="@+id/cb_team_qualifying"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="是否开启组队王者争霸" />
+
+    <CheckBox
+        android:id="@+id/cb_turntable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否开启黄金轮盘" />
 
     <EditText
         android:id="@+id/edittext"
