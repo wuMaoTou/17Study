@@ -1,81 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="1.启动app安装证书用于拦截https请求\n2.重启大乐斗,完成启动到乐斗主页面\n3.返回本页点击获取token\n4.获取token成功后开启辅助" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/bt_get_token"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="获取token" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="1.启动app安装证书用于拦截https请求\n2.重启大乐斗,完成启动到乐斗主页面\n3.返回本页点击获取token\n4.获取token成功后开启辅助" />
 
-    <CheckBox
-        android:id="@+id/cb_sns"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:checked="true"
-        android:text="是否开启挑战好友" />
+        <Button
+            android:id="@+id/bt_get_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取token" />
 
-    <CheckBox
-        android:id="@+id/cb_map_push"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="是否开启自动历练" />
+        <CheckBox
+            android:id="@+id/cb_sns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="是否开启挑战好友" />
 
-    <CheckBox
-        android:id="@+id/cb_visit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="是否开启自动造访" />
+        <CheckBox
+            android:id="@+id/cb_map_push"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="是否开启自动历练" />
 
-    <CheckBox
-        android:id="@+id/cb_qualifying"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="是否开启王者争霸" />
+        <CheckBox
+            android:id="@+id/cb_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="是否开启自动造访" />
 
-    <CheckBox
-        android:id="@+id/cb_team_qualifying"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="是否开启组队王者争霸" />
+        <CheckBox
+            android:id="@+id/cb_qualifying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="是否开启王者争霸" />
 
-    <CheckBox
-        android:id="@+id/cb_turntable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="是否开启黄金轮盘" />
+        <CheckBox
+            android:id="@+id/cb_team_qualifying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="是否开启组队王者争霸" />
 
-    <EditText
-        android:id="@+id/edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        <CheckBox
+            android:id="@+id/cb_turntable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="是否开启黄金轮盘" />
 
-    <TextView
-        android:id="@+id/start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="start" />
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="start" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>

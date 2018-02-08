@@ -25,6 +25,18 @@ class SnsService {
             LogUtils.d("[${v}PK-初始化]---" + respone.text)
             val friendlist = respone.jsonObject.getJSONArray("friendlist")
 
+            if (k == 0){
+                for (i in 0..friendlist.length()-1) {
+                    val jsonObject = friendlist.get(i) as JSONObject
+                    val uid = jsonObject.getString("uid")
+                    val atc_uid = Contacts.TOKEN_PARAMS.get("uid")
+                    if (atc_uid.equals(uid)){
+                        Contacts.ATTACK_POWER = jsonObject.getInt("power")
+                        LogUtils.d("PK-当前战力]---${Contacts.ATTACK_POWER}")
+                    }
+                }
+            }
+
             snsFight(friendlist, k, v);
         }
         shopReelGold()
@@ -42,6 +54,11 @@ class SnsService {
             }
             val jsonObject = friendlist.get(i) as JSONObject
             if (jsonObject.getInt("can_fight") == 0) {
+                continue
+            }
+            val power = jsonObject.getInt("power")
+            if (power + 1000 > Contacts.ATTACK_POWER || power < Contacts.ATTACK_POWER - 15000){
+                LogUtils.d("PK-对方战力${power},惹不起,惹不起]")
                 continue
             }
             val uid = jsonObject.getString("uid")

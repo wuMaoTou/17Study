@@ -16,4 +16,6 @@ object Contacts {
     var CATCH_EVENT = 101;
 
     var TEAM_QUA = false;
+
+    var ATTACK_POWER = 0;
 }

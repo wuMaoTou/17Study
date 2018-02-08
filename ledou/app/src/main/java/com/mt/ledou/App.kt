@@ -80,7 +80,6 @@ class App : Application() {
 
         Log.e("~~~", "${proxy.getPort()}")
 
-
         val response = SharedPreferenceUtils.get(this.applicationContext, "response_filter")
         if (response != null && response is List<*>) {
             ruleList = response as MutableList<ResponseFilterRule>
@@ -90,7 +89,7 @@ class App : Application() {
 
         if (shp.getBoolean("enable_filter", false)) {
             Log.e("~~~enable_filter", "")
-            initResponseFilter()
+//            initResponseFilter()
         }
 
         // 设置hosts
