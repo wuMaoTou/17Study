@@ -1,0 +1,104 @@
+<template>
+  <!-- template里只能有一个根节点 -->
+  <div class="demo-page">
+    <text class="title">欢迎打开{{title}}</text>
+    <!-- 点击跳转详情页 -->
+    <input class="btn" type="button" value="跳转到详情页" onclick="routeDetail">
+    <input class="style" type="button" value="跳转到设置样式页面" onclick="routeStyle">
+    <input class="command" type="button" value="跳转到指令页面" onclick="routeComand">
+    <div class="params">
+      <a class="jump" href="/PageParams?key=Hello,World~&key1={{title}}">a跳转到传参页面</a>
+      <input class="param" type="button" value="router跳转到传参页面" onclick="routeParams">
+      <text class="msg" show="{msg === undefind}">{{msg}}</text>
+    </div>
+  </div>
+</template>
+
+<style>
+  .demo-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .btn,.command,.style{
+    width: 550px;
+    height: 86px;
+    margin-top: 75px;
+    border-radius: 43px;
+    background-color: #09ba07;
+    font-size: 30px;
+    color: #ffffff;
+  }
+
+  .jump,.param{
+    text-align: center;
+    width: 275px;
+    height: 86px;
+    margin-top: 75px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 43px;
+    background-color: #09ba07;
+    font-size: 25px;
+    color: #ffffff;
+  }
+
+  .msg{
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    margin-top: 75px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 43px;
+    background-color: #ff0000;
+    font-size: 20px;
+    color: #ffffff;
+  }
+</style>
+
+<script>
+  import router from '@system.router'
+
+  export default {
+    data: {
+      title: '示例页面',
+      msg:''
+    },
+    routeDetail() {
+      // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+      router.push({
+        uri: '/DemoDetail'
+      })
+      console.debug("routeDetail")
+    },
+    routeStyle() {
+      router.push({
+        uri: '/Style'
+      })
+    },
+    routeComand(){
+      router.push({
+        uri:'/Command'
+      })
+    },
+    routeParams(){
+      router.push({
+        uri:'/PageParams',
+        params:{key:'Hello',key1:this.title}
+      })
+    },
+    onShow(){
+      if(this.$app.$data.PageParams && this.$app.$data.PageParams.gotoPage === 'Demo'){
+        var data = this.$app.$data.PageParams.params;
+        this.msg = data.msg;
+      }
+    }
+  }
+</script>

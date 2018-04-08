@@ -1,0 +1,52 @@
+<template>
+    <div class="tutorial-page">
+        <a href="tel:10086">调起电话</a>
+        <a href="sms:10086">调起短信</a>
+        <a href="mailto:example@xx.com">调起邮件</a>
+        <a href="http://www.baidu.com/">调起网页</a>
+
+        <text class="key">接收到的参数:key-{{key}},key1-{{key1}}</text>
+    </div>
+</template>
+
+<style>
+    .tutorial-page{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    a {
+        margin-top: 75px;
+        font-size: 30px;
+        color:#09BA07;
+        text-decoration: underline;
+    }
+
+    .key{
+        margin-top: 75px;
+        font-size: 30px;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    export default{
+        data:{
+            key:'vaule',
+            key1:'vaule1',
+            msg:''
+        },
+        onInit(){
+            this.$page.setTitleBar({text:'接受参数'})
+        },
+        onHide(){
+            this.$app.$data.PageParams = {
+                gotoPage:'Demo',
+                params:{
+                    msg:this.key
+                }
+            }
+        }
+    }
+</script>

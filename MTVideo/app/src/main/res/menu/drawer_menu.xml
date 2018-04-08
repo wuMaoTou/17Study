@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="视频网站导航">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_tencent"
+                    android:icon="@drawable/tencent"
+                    android:title="腾讯视频" />
+                <item
+                    android:id="@+id/nav_aiqiyi"
+                    android:icon="@drawable/aiqiyi"
+                    android:title="爱奇艺" />
+                <item
+                    android:id="@+id/nav_youku"
+                    android:icon="@drawable/youku"
+                    android:title="优酷" />
+                <item
+                    android:id="@+id/nav_mgtv"
+                    android:icon="@drawable/mgtv"
+                    android:title="芒果TV" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

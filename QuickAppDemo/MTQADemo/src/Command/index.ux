@@ -1,0 +1,99 @@
+<template>
+    <div class="tutorial-page">
+        <!-- 方式1:默认$item代表数组中的元素,$idx代表数组中的索引 -->
+        <div class="tutorial-row" for="{{list}}">
+            <text>{{$idx}}.{{$item.name}}</text>
+        </div>
+
+        <!-- 方式2:自定义元素变量名称 -->
+        <div class="tutorial-row" for="value in list">
+            <text>{{$idx}}.{{value.name}}</text>
+        </div>
+
+        <!-- 方式3:自定义元素,索引的变量名称 -->
+        <div class="tutorial-row" for="(personIndex, personItem) in list">
+            <text>{{personIndex}}.{{personItem.name}}</text>
+        </div>
+        
+        <text>-------------------------------------</text>
+
+        <text class="if" onclick="onClickCondition">条件指令:</text>
+        <text if="{{conditionVar === 1}}">if: if条件</text>
+        <text elif="{{conditionVar === 2}}">elif: elif条件</text>
+        <text else="">else: 其他</text>
+        
+        <text>-------------------------------------</text>
+
+        <text onclick="toggleCityList">点击:控制是否显示城市</text>
+        <list if="{{showCityList === 1}}">
+                <list-item for="city in cityList" type="city">
+                    <text>城市:{{city.name}}</text>
+                        <div for="{{city.spots}}" show="{{city.showSpots}}">
+                            <text>景点:{{$item.name}}</text>
+                        </div>
+                </list-item>
+        </list>
+
+    </div>
+</template>
+
+<style>
+    .tutorial-page {
+        flex-direction: column;
+    }
+
+    .tutorial-row {
+        width: 85%;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .if{
+        margin-top: 20px;
+    }
+
+    .tutorial-page > text{
+        margin-top: 20px
+    }
+
+    list,list-item{
+        flex-direction: column
+    }
+</style>
+
+<script>
+    export default{
+        data:{
+            list:[{name:'a'},{name:'bb'}],
+            conditionVar: 1,
+
+            showCityList:1,
+            cityList:[
+                {
+                    name:'北京',
+                    showSopts:true,
+                    spots:[
+                        {name:'天安门'},
+                        {name:'八达岭'}
+                    ]
+                },
+                {
+                    name:'上海',
+                    showSpots:false,
+                    spots:[
+                        {name:'东方明珠'}
+                    ]
+                }
+            ]
+        },
+        onInit(){
+            this.$page.setTitleBar({text:'指令页面'})
+        },
+        onClickCondition(){
+            this.conditionVar = ++this.conditionVar % 3
+        },
+        toggleCityList(){
+            this.showCityList = this.showCityList === 1 ? 0:1
+        }
+    }
+</script>

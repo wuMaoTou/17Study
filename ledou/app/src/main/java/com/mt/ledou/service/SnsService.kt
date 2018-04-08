@@ -48,8 +48,7 @@ class SnsService {
     private fun snsFight(friendlist: JSONArray, type: Int, typeName: String) {
         var fightNum = 0;
         for (i in 0..friendlist.length()-1) {
-            fightNum++
-            if (fightNum > 15) {
+            if (fightNum > 30) {
                 break
             }
             val jsonObject = friendlist.get(i) as JSONObject
@@ -69,6 +68,7 @@ class SnsService {
                 snsLimitAndUse()
             }
             Thread.sleep(200)
+            fightNum++
         }
     }
 
