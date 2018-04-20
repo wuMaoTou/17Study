@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MTBsDiff">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/lib/MTBsDiff.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

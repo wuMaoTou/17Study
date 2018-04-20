@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 创建数据库表的的配置文件 -->
+<!-- 下面的配置会在启动服务时自动创建用户表"t_user" -->
+<hibernate-mapping>
+    <class name="com.maotou.appservice.bean.UserBean" table="t_user">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="phone" column="phone"/>
+        <property name="password" column="password"/>
+        <property name="username" column="username"/>
+        <property name="sex" column="sex"/>
+        <property name="age" column="age"/>
+    </class>
+
+    <class name="com.maotou.appservice.bean.TokenBean" table="t_token">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="phone" column="phone"/>
+        <property name="token" column="token"/>
+    </class>
+
+    <class name="com.maotou.appservice.bean.UpdateBean" table="t_update">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="md5value" column="md5value"/>
+        <property name="versionCode" column="versionCode"/>
+        <property name="versionName" column="versionName"/>
+        <property name="newVersionCode" column="newVersionCode"/>
+        <property name="newVersionName" column="newVersionName"/>
+        <property name="fileSize" column="fileSize"/>
+        <property name="patchSize" column="patchSize"/>
+        <property name="downloadPath" column="downloadPath"/>
+        <property name="patchDownloadPath" column="patchDownloadPath"/>
+        <property name="channelId" column="channelId"/>
+    </class>
+</hibernate-mapping>
