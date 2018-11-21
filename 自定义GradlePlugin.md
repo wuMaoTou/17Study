@@ -3,6 +3,7 @@
 1.在项目根目录下创建名称为buildSrc的library Module
 
 2.修改项目目录结构
+
 ![目录结构](images/buildSrc_mdir.png)
 
 3.修改build.gradle文件
@@ -76,10 +77,8 @@
 	
 	// 或
 	
-	//plugins {
-	//    id 'maven-publish'
-	////    id 'ivy-publish'
-	//}
+	//apply plugin: 'maven-publish'
+	//
 	//publishing {
 	//    publications {
 	//        maven(MavenPublication) {

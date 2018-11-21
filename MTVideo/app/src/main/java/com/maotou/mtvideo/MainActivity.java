@@ -18,19 +18,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.maotou.mtvideo.weight.X5WebView;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
-    private WebView mWebView;
+    private X5WebView mWebView;
     private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
     private static final String TENCENT_URL = "https://v.qq.com";
     private static final String AIQIYI_URL = "https://www.iqiyi.com";
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity
     private AlertDialog exitDialog;
     private boolean needClearHistory;
     private String mCurrentUrl = HOME_URL;
-    private WebSettings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,20 +65,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initWebView() {
-        settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setDatabaseEnabled(true);
-        settings.setAppCacheEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setPluginState(WebSettings.PluginState.ON);
-        settings.setAllowFileAccess(true);
-        settings.setLoadWithOverviewMode(false);
-        settings.setDomStorageEnabled(true);
-        settings.setUseWideViewPort(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setUserAgentString(PHONE_UA);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -105,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.d("shouldOverrideUrl", url);
+                Log.d("Main-shouldOverrideUrl", url);
                 mCurrentUrl = url;
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -114,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                Log.d("shouldOverrideUrl", "L---" + url);
+                Log.d("Main-shouldOverrideUrl", "L---" + url);
                 mCurrentUrl = url;
                 return super.shouldOverrideUrlLoading(view, request);
             }
@@ -204,14 +190,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        settings.setJavaScriptEnabled(true);
         mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        settings.setJavaScriptEnabled(false);
         mWebView.onPause();
     }
 

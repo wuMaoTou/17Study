@@ -1,50 +1,50 @@
 package com.maotou.mtvideo;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.JavascriptInterface;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.maotou.mtvideo.weight.X5WebView;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.Properties;
 
 public class VipPlayActivity extends AppCompatActivity {
 
     public static final String URL_KEY = "URL_KEY";
-    private WebView mWebView;
+    private X5WebView mWebView;
     private static final String PHONE_UA = "Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36";
     private Properties proper;
     private Spinner spinner;
-    private WebSettings settings;
     private String mCurrentUrl;
     private ProgressBar mProgressBar;
+    private String src;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +79,8 @@ public class VipPlayActivity extends AppCompatActivity {
     }
 
     private void initWebView() {
-        settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setDatabaseEnabled(true);
-        settings.setAppCacheEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setPluginState(WebSettings.PluginState.ON);
-        settings.setAllowFileAccess(true);
-        settings.setLoadWithOverviewMode(false);
-        settings.setDomStorageEnabled(true);
-        settings.setUseWideViewPort(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setUserAgentString(PHONE_UA);
         mWebView.setWebChromeClient(new WebChromeClient() {
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
@@ -106,45 +93,75 @@ public class VipPlayActivity extends AppCompatActivity {
                 }
                 super.onProgressChanged(view, newProgress);
             }
+
         });
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.d("shouldOverrideUrl", url);
+                Log.d("VipPlay-shouldOverride", url);
                 mCurrentUrl = url;
+                view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                Log.d("shouldOverrideUrl", "L---" + url);
+                Log.d("VipPlay-shouldOverride", "L---" + url);
                 mCurrentUrl = url;
+                view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Nullable
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                //判断是否是广告相关的资源链接
+                if (!AdFilterTool.isAd(view.getContext(), url)) {
+                    //这里是不做处理的数据
+                    return super.shouldInterceptRequest(view, url);
+                } else {
+                    //有广告的请求数据，我们直接返回空数据，注：不能直接返回null
+                    return new WebResourceResponse(null, null, null);
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Nullable
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                //判断是否是广告相关的资源链接
+                if (!AdFilterTool.isAd(view.getContext(), url)) {
+                    //这里是不做处理的数据
+                    return super.shouldInterceptRequest(view, url);
+                } else {
+                    //有广告的请求数据，我们直接返回空数据，注：不能直接返回null
+                    return new WebResourceResponse(null, null, null);
+                }
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
+                Log.d("VipPlay-onLoadResource", url);
                 if (url.contains(".mp4")) {
-                    Log.d("onLoadResource", url);
                 }
             }
         });
     }
 
     //记录用户首次点击返回键的时间
-    private long firstTime=0;
+    private long firstTime = 0;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
-            if (System.currentTimeMillis()-firstTime>2000){
-                Toast.makeText(VipPlayActivity.this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
-                firstTime=System.currentTimeMillis();
-            }else{
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - firstTime > 2000) {
+                Toast.makeText(VipPlayActivity.this, "再按一次Vip播放", Toast.LENGTH_SHORT).show();
+                firstTime = System.currentTimeMillis();
+            } else {
                 finish();
             }
             return true;
@@ -166,10 +183,10 @@ public class VipPlayActivity extends AppCompatActivity {
         if (id == R.id.action_refresh && mWebView != null) {
             mWebView.reload();
             return true;
-        }else if (id == R.id.action_copy) {
+        } else if (id == R.id.action_copy) {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             cm.setText(mCurrentUrl);
-            Toast.makeText(this,"复制成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "复制成功", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -178,14 +195,12 @@ public class VipPlayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        settings.setJavaScriptEnabled(true);
         mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        settings.setJavaScriptEnabled(false);
         mWebView.onPause();
     }
 
