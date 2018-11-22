@@ -18,26 +18,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.maotou.mtvideo.weight.X5WebView;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
-    private X5WebView mWebView;
+    private WebView mWebView;
     private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
     private static final String TENCENT_URL = "https://v.qq.com";
     private static final String AIQIYI_URL = "https://www.iqiyi.com";
     private static final String YOUKU_URL = "http://www.youku.com";
     private static final String MGTV_URL = "https://www.mgtv.com";
-    private static final String PHONE_UA = "Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36";
     private ProgressBar mProgressBar;
     private AlertDialog exitDialog;
     private boolean needClearHistory;
@@ -65,6 +64,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initWebView() {
+        WebSettings webSetting = mWebView.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setLoadWithOverviewMode(true);
+        webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSetting.setAllowFileAccess(true);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSetting.setBlockNetworkImage(false);
+        webSetting.setSupportZoom(true);
+        webSetting.setBuiltInZoomControls(true);
+        webSetting.setUseWideViewPort(true);
+        webSetting.setAppCacheEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -146,7 +161,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         needClearHistory = true;
-        if (id == R.id.nav_tencent) {
+        if (id == R.id.nav_home) {
+            mWebView.loadUrl(HOME_URL);
+        } else if (id == R.id.nav_tencent) {
             mWebView.loadUrl(TENCENT_URL);
         } else if (id == R.id.nav_aiqiyi) {
             mWebView.loadUrl(AIQIYI_URL);

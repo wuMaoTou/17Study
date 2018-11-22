@@ -1,57 +1,57 @@
 package com.maotou.mtvideo;
 
-import android.annotation.TargetApi;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.JavascriptInterface;
+import android.view.WindowManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.maotou.mtvideo.weight.X5WebView;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
-import com.tencent.smtt.sdk.ValueCallback;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.util.Properties;
+
 
 public class VipPlayActivity extends AppCompatActivity {
 
     public static final String URL_KEY = "URL_KEY";
-    private X5WebView mWebView;
+    private WebView mWebView;
     private static final String PHONE_UA = "Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36";
     private Properties proper;
     private Spinner spinner;
     private String mCurrentUrl;
     private ProgressBar mProgressBar;
     private String src;
+    private String host;
+    private FrameLayout mVideoContainer;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vip_paly_activity);
-        mCurrentUrl = getIntent().getStringExtra(URL_KEY);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        src = getIntent().getStringExtra(URL_KEY);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -61,6 +61,7 @@ public class VipPlayActivity extends AppCompatActivity {
             }
         });
         mWebView = findViewById(R.id.webview);
+        mVideoContainer = findViewById(R.id.frame_web_video);
         mProgressBar = findViewById(R.id.progressBar1);
         initWebView();
         spinner = findViewById(R.id.spinner_text);
@@ -68,7 +69,9 @@ public class VipPlayActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mWebView.loadUrl(proper.getProperty(position + "") + mCurrentUrl);
+                host = proper.getProperty(position + "");
+                mCurrentUrl = host + src;
+                mWebView.loadUrl(mCurrentUrl);
             }
 
             @Override
@@ -79,7 +82,50 @@ public class VipPlayActivity extends AppCompatActivity {
     }
 
     private void initWebView() {
+        WebSettings webSetting = mWebView.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setLoadWithOverviewMode(true);
+        webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSetting.setAllowFileAccess(true);
+        webSetting.setSupportZoom(true);
+        webSetting.setBuiltInZoomControls(true);
+        webSetting.setUseWideViewPort(true);
+        webSetting.setAppCacheEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+        webSetting.setGeolocationEnabled(true);
+        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSetting.setUserAgentString(PHONE_UA);
+        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebChromeClient(new WebChromeClient() {
+
+            private CustomViewCallback mCallBack;
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                mWebView.setVisibility(View.GONE);
+                toolbar.setVisibility(View.GONE);
+                mVideoContainer.setVisibility(View.VISIBLE);
+                mVideoContainer.addView(view);
+                mCallBack =callback;
+                // 横屏显示
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                setFullScreen();
+            }
+
+            @Override
+            public void onHideCustomView() {
+                if (mCallBack !=null){
+                    mCallBack.onCustomViewHidden();
+                }
+                mWebView.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.VISIBLE);
+                mVideoContainer.removeAllViews();
+                mVideoContainer.setVisibility(View.GONE);
+                // 用户当前的首选方向
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                quitFullScreen();
+            }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -101,16 +147,15 @@ public class VipPlayActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.d("VipPlay-shouldOverride", url);
                 mCurrentUrl = url;
-                view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
                 Log.d("VipPlay-shouldOverride", "L---" + url);
                 mCurrentUrl = url;
-                view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, request);
             }
 
@@ -145,8 +190,8 @@ public class VipPlayActivity extends AppCompatActivity {
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
-                Log.d("VipPlay-onLoadResource", url);
-                if (url.contains(".mp4")) {
+                if (url.contains(host)) {
+                    Log.d("VipPlay-onLoadResource", url);
                 }
             }
         });
@@ -209,4 +254,24 @@ public class VipPlayActivity extends AppCompatActivity {
         super.onDestroy();
         mWebView.destroy();
     }
+
+    /**
+     * 设置全屏
+     */
+    public void setFullScreen() {
+        // 设置全屏的相关属性，获取当前的屏幕状态，然后设置全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 退出全屏
+     */
+    public void quitFullScreen() {
+        // 声明当前屏幕状态的参数并获取
+        final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setAttributes(attrs);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
 }

@@ -7,6 +7,10 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/nav_home"
+                    android:icon="@drawable/ic_home"
+                    android:title="首页" />
+                <item
                     android:id="@+id/nav_tencent"
                     android:icon="@drawable/tencent"
                     android:title="腾讯视频" />
