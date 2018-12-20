@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout mDrawer;
     private WebView mWebView;
-    private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
+//    private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
+    private static final String HOME_URL = "https://dev.chezhency.com/Home/Public/zhongbangIndex/uid/4959";
     private static final String TENCENT_URL = "https://v.qq.com";
     private static final String AIQIYI_URL = "https://www.iqiyi.com";
     private static final String YOUKU_URL = "http://www.youku.com";
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webSetting.setBlockNetworkImage(false);
         webSetting.setSupportZoom(true);
         webSetting.setBuiltInZoomControls(true);
         webSetting.setUseWideViewPort(true);
