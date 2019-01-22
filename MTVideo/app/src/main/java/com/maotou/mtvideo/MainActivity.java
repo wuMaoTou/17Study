@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -164,7 +165,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             mWebView.loadUrl(HOME_URL);
         } else if (id == R.id.nav_tencent) {
-            mWebView.loadUrl(TENCENT_URL);
+//            mWebView.loadUrl(TENCENT_URL);
+            Settings.Secure.putInt(getContentResolver(), Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED,1);
         } else if (id == R.id.nav_aiqiyi) {
             mWebView.loadUrl(AIQIYI_URL);
         } else if (id == R.id.nav_youku) {

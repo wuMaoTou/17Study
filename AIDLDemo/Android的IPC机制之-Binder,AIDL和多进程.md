@@ -268,6 +268,7 @@ BnServiceManager(servicemanager.c)处理BpServiceManager发送到binderDriver的
 创建线程池,在工作线程中循环调用executeCommand(cmd)处理消息,最后调用BBinder的transact再调用自己的onTransact通过code确认调用那个业务方法
 
 [罗升阳的Android进程间通信（IPC）机制Binder简要介绍和学习计划](https://blog.csdn.net/Luoshengyang/article/details/6618363)
+[写给 Android 应用工程师的 Binder 原理剖析](https://zhuanlan.zhihu.com/p/35519585)
 [MediaService初始化过程]()
 
 

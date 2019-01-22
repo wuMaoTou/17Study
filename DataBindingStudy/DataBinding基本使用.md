@@ -339,7 +339,6 @@ Item binding =DataBindingUtil.setContentView(FiveActivity.this, R.layout.activit
         <variable
             name="user4"
             type="User" />
-
 <!--因为type="User"都为User类，会导致不知道到那个包，所以可以通过alias属性重命名type的类型，但实际上alias被指定的那个类型(如：www.zhang.com.databinding.model.User)-->
         <import type="www.zhang.com.databinding.model.User" alias="Model"/>
 
