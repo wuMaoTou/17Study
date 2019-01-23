@@ -231,6 +231,7 @@ Android系统中每个应用程序都会有一个唯一的UID,每个UID对应的
 - 6.2 最终将结果返回掉业务调用端
 
 ### 参考资料
+[Android艺术开发探索]()
 [Android深入浅出之Binder机制](http://www.cnblogs.com/innost/archive/2011/01/09/1931456.html)
 **MediaService初始化过程**
 ```
