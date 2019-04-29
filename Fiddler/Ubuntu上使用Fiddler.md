@@ -12,7 +12,7 @@ sudo apt-get install mono-complete
 
 2.下载Fiddler for Mono
 [http://fiddler.wikidot.com/mono](http://fiddler.wikidot.com/mono)
-![](/home/lichun/桌面/fiddler_download.png) 
+![](image/fiddler_download.png) 
 
 3.解压运行
 解压后进入解压目录,命令启动fiddler
@@ -70,22 +70,22 @@ mono /home/这里来一段文件路径/解压目录/Fiddler.exe
 1.配置fiddler
 1.1启动fiddler,打开fiddler设置页面
 Tool - Fiddler Options
-![](/home/lichun/桌面/open_options.png) 
+![](image/open_options.png) 
 
 1.2开启拦截https
 选择https选项卡，勾选下面两项，这样fiddler就可以拦截HTTPS请求了
-![](/home/lichun/桌面/capture_https.png) 
+![](image/capture_https.png) 
 
 1.3开启代理
 选择connections选项卡，勾选下面一项，这样就可以允许远程机器把HTTP/HTTPS请求发送到Fiddler上来
-![](/home/lichun/图片/connections.png) 
+![](image/connections.png) 
 **注:**端口号默认为8888,可手动修改端口号,避免撞号
 
 2.配置手机wifi
 首先要保证手机和电脑在同一个网段下
 2.1设置代理
 打开手机的wifi设置页面给当前使用的wifi设置代理,代理服务器添上你电脑的IP地址,端口号添上Fiddler上设置的端口号,保存即可
-![](/home/lichun/桌面/proxy.png) 
+![](image/proxy.png) 
 
 
 
