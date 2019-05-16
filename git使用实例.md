@@ -41,3 +41,17 @@
  git merge dev --squash //如遇冲突就解决冲突
  git commit -m "这里是注释"
 ```
+
+### 3.删除git仓库已提交的文件
+在github上只能删除仓库,却无法删除文件夹或文件, 所以只能通过命令来解决
+
+```
+$ git --help  # 帮助命令
+
+$ git pull origin master # 将远程仓库里面的项目拉下来
+
+$ dir  # 查看有哪些文件夹
+$ git rm -r --cached .idea # 删除.idea文件夹
+$ git commit -m '删除.idea' # 提交,添加操作说明
+$ git push -u origin master # 将本次更改更新到github项目上去
+```
