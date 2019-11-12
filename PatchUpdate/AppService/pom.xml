@@ -11,7 +11,7 @@
     <!-- 定义全局参数 -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.varsion>4.2.6.RELEASE</spring.varsion>
+        <spring.varsion>5.2.1.RELEASE</spring.varsion>
         <hibernate.version>5.0.12.Final</hibernate.version>
         <jackson.version>2.5.0</jackson.version>
     </properties>
