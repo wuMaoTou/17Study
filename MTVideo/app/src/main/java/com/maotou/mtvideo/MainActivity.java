@@ -8,33 +8,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebResourceRequest;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
+import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
     private WebView mWebView;
-//    private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
-    private static final String HOME_URL = "https://dev.chezhency.com/Home/Public/zhongbangIndex/uid/4959";
+    private static final String HOME_URL = "http://go.uc.cn/page/subpage/shipin?uc_param_str=dnfrpfbivecpbtntla";
     private static final String TENCENT_URL = "https://v.qq.com";
     private static final String AIQIYI_URL = "https://www.iqiyi.com";
     private static final String YOUKU_URL = "http://www.youku.com";
@@ -165,8 +162,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             mWebView.loadUrl(HOME_URL);
         } else if (id == R.id.nav_tencent) {
-//            mWebView.loadUrl(TENCENT_URL);
-            Settings.Secure.putInt(getContentResolver(), Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED,1);
+            mWebView.loadUrl(TENCENT_URL);
         } else if (id == R.id.nav_aiqiyi) {
             mWebView.loadUrl(AIQIYI_URL);
         } else if (id == R.id.nav_youku) {
@@ -197,10 +193,13 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, VipPlayActivity.class);
             intent.putExtra(VipPlayActivity.URL_KEY, mCurrentUrl);
             startActivity(intent);
+        } else if (id == R.id.action_tb) {
+            Intent intent = new Intent(this, TBActivity.class);
+            startActivity(intent);
         } else if (id == R.id.action_copy) {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             cm.setText(mCurrentUrl);
-            Toast.makeText(this,"复制成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "复制成功", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

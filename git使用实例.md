@@ -55,3 +55,8 @@ $ git rm -r --cached .idea # 删除.idea文件夹
 $ git commit -m '删除.idea' # 提交,添加操作说明
 $ git push -u origin master # 将本次更改更新到github项目上去
 ```
+
+### 4.合并多次commit信息
+右键点击项目 - git - repository - reset HEAD
+to commit: HEAD^^^^ (^代表回退的次数)
+再重新add文件commit - push 就可以了

@@ -339,6 +339,183 @@ Android 9.0 中为了改善应用稳定性和数据完整性，应用无法再�
 	}
 ```
 
+## Android 10
+**1.Region.Op相关异常：java.lang.IllegalArgumentException: Invalid Region.Op - only INTERSECT and DIFFERENCE are allowed**
+当 targetSdkVersion >= Build.VERSION_CODES.P 时调用 canvas.clipPath(path, Region.Op.XXX); 引起的异常.
+解决方案如下，用Path.op代替，先运算Path，再给canvas.clipPath：
+```
+	if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+    Path mPathXOR = new Path();
+    mPathXOR.moveTo(0,0);
+    mPathXOR.lineTo(getWidth(),0);
+    mPathXOR.lineTo(getWidth(),getHeight());
+    mPathXOR.lineTo(0,getHeight());
+    mPathXOR.close();
+    //以上根据实际的Canvas或View的大小，画出相同大小的Path即可
+    mPathXOR.op(mPath0, Path.Op.XOR);
+    canvas.clipPath(mPathXOR);
+	}else {
+	    canvas.clipPath(mPath0, Region.Op.XOR);
+	}
+```
+**2.Android Q(10)中的媒体资源读写**
+1、扫描系统相册、视频等，图片、视频选择器都是通过ContentResolver来提供，主要代码如下：
+```
+	private static final String[] IMAGE_PROJECTION = {
+	            MediaStore.Images.Media.DATA,
+	            MediaStore.Images.Media.DISPLAY_NAME,
+	            MediaStore.Images.Media._ID,
+	            MediaStore.Images.Media.BUCKET_ID,
+	            MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+	
+	 Cursor imageCursor = mContext.getContentResolver().query(
+	                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+	                    IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[4] + " DESC");
+	
+	String path = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
+	String name = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
+	int id = imageCursor.getInt(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+	String folderPath = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[3]));
+	String folderName = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
+	
+	//Android Q 公有目录只能通过Content Uri + id的方式访问，以前的File路径全部无效，如果是Video，记得换成MediaStore.Videos
+	if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+	      path  = MediaStore.Images.Media
+	                       .EXTERNAL_CONTENT_URI
+	                       .buildUpon()
+	                       .appendPath(String.valueOf(id)).build().toString();
+	 }
+```
+2、判断公有目录文件是否存在，自Android Q开始，公有目录File API都失效，不能直接通过new File(path).exists();判断公有目录文件是否存在，正确方式如下：
+```
+	public static boolean isAndroidQFileExists(Context context, String path){
+	        if (context == null) {
+	            return false;
+	        }
+	        AssetFileDescriptor afd = null;
+	        ContentResolver cr = context.getContentResolver();
+	        try {
+	            Uri uri = Uri.parse(path);
+	            afd = cr.openAssetFileDescriptor(Uri.parse(path), "r");
+	            if (afd == null) {
+	                return false;
+	            } else {
+	                close(afd);
+	            }
+	        } catch (FileNotFoundException e) {
+	            return false;
+	        }finally {
+	            close(afd);
+	        }
+	        return true;
+	}
+```
+3、保存或者下载文件到公有目录，保存Bitmap同理，如Download，MIME_TYPE类型可以自行参考对应的文件类型，这里只对APK作出说明
+```
+	public static void copyToDownloadAndroidQ(Context context, String sourcePath, String fileName, String saveDirName){
+	        ContentValues values = new ContentValues();
+	        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+	        values.put(MediaStore.Downloads.MIME_TYPE, "application/vnd.android.package-archive");
+	        values.put(MediaStore.Downloads.RELATIVE_PATH, "Download/" + saveDirName.replaceAll("/","") + "/");
+	
+	        Uri external = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+	        ContentResolver resolver = context.getContentResolver();
+	
+	        Uri insertUri = resolver.insert(external, values);
+	        if(insertUri == null) {
+	            return;
+	        }
+	
+	        String mFilePath = insertUri.toString();
+	
+	        InputStream is = null;
+	        OutputStream os = null;
+	        try {
+	            os = resolver.openOutputStream(insertUri);
+	            if(os == null){
+	                return;
+	            }
+	            int read;
+	            File sourceFile = new File(sourcePath);
+	            if (sourceFile.exists()) { // 文件存在时
+	                is = new FileInputStream(sourceFile); // 读入原文件
+	                byte[] buffer = new byte[1444];
+	                while ((read = is.read(buffer)) != -1) {
+	                    os.write(buffer, 0, read);
+	                }
+	                is.close();
+	                os.close();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        finally {
+	            close(is,os);
+	        }
+	
+	}
+```
+4、保存图片相关
+```
+	 /**
+	     * 通过MediaStore保存，兼容AndroidQ，保存成功自动添加到相册数据库，无需再发送广告告诉系统插入相册
+	     *
+	     * @param context      context
+	     * @param sourceFile   源文件
+	     * @param saveFileName 保存的文件名
+	     * @param saveDirName  picture子目录
+	     * @return 成功或者失败
+	     */
+	    public static boolean saveImageWithAndroidQ(Context context,
+	                                                  File sourceFile,
+	                                                  String saveFileName,
+	                                                  String saveDirName) {
+	        String extension = BitmapUtil.getExtension(sourceFile.getAbsolutePath());
+	
+	        ContentValues values = new ContentValues();
+	        values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image");
+	        values.put(MediaStore.Images.Media.DISPLAY_NAME, saveFileName);
+	        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+	        values.put(MediaStore.Images.Media.TITLE, "Image.png");
+	        values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/" + saveDirName);
+	
+	        Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+	        ContentResolver resolver = context.getContentResolver();
+	
+	        Uri insertUri = resolver.insert(external, values);
+	        BufferedInputStream inputStream = null;
+	        OutputStream os = null;
+	        boolean result = false;
+	        try {
+	            inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+	            if (insertUri != null) {
+	                os = resolver.openOutputStream(insertUri);
+	            }
+	            if (os != null) {
+	                byte[] buffer = new byte[1024 * 4];
+	                int len;
+	                while ((len = inputStream.read(buffer)) != -1) {
+	                    os.write(buffer, 0, len);
+	                }
+	                os.flush();
+	            }
+	            result = true;
+	        } catch (IOException e) {
+	            result = false;
+	        } finally {
+	            Util.close(os, inputStream);
+	        }
+	        return result;
+	}
+```
+**4.EditText默认不获取焦点，不自动弹出键盘**
+```
+	mEditText.post(() -> {
+       mEditText.requestFocus();
+       mEditText.setFocusable(true);
+       mEditText.setFocusableInTouchMode(true);
+	});
+```
 
 ##另外适配
 
@@ -351,7 +528,7 @@ Android 9.0 中为了改善应用稳定性和数据完整性，应用无法再�
 </application>
 ```
 
-**2.8.0的应用图标适配**
+**2.Android 8.0的应用图标适配**
 使用AndroidStudio的ImageAsset工具生成图标
 
 

@@ -1,0 +1,40 @@
+1.如果只是反编译Apk中的dex,可用7zip或其它压缩软件解压出Apk包中dex文件
+
+这种方法看不到xml布局等配置信息
+
+若只有odex，将odex回编译成dex方法：
+java -jar baksmali.jar -x  classes.odex
+
+当前文件夹下会生成一个out文件夹然后输入命令：
+java -Xmx512M -jar smali.jar out -o classes.dex
+
+
+
+2.若继续转化为jar文件查看：
+
+d2j-dex2jar -f classes.dex
+
+即可生成相应的classes_dex2jar.jar
+把classes_dex2jar.jar拖到Jd-gui即可看到具体java代码
+
+
+
+3.如果你需要查看布局等Xml配置文件或熟悉smali语法
+java -jar apktool.jar d yuan.apk yuan_fby
+
+反编译出smali代码等进行查看修改
+
+
+
+4.如果你不仅想看还想回编刚才反编译出的smali到一个新的Apk
+java -jar apktool.jar b  yuan_fby yuan_fby.apk
+
+
+
+5.注意步骤4编译出的Apk是没有签名的
+
+如果你有系统签名可以获得高权限：
+java -jar signapk.jar platform.x509.pem platform.pk8  yuan_fby.apk  yuan_fby_signed.apk
+
+如果没有系统签名则可用testkey签名：
+ java -jar signapk.jar  testkey.x509.pem  testkey.pk8 yuan_fby.apk  yuan_fby_signed.apk
