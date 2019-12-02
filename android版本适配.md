@@ -11,6 +11,8 @@
   在targetSdkVersion大于等于的24的App中，但是我们没有去适配7.0。那么在调用安装页面，或修改用户头像操作时，就会失败。那么就需要你去适配7.0或是将targetSdkVersion改为24以下（不推荐）。适配的方法这里就不细讲，大家可以看鸿洋大神的
 [Android 7.0 行为变更 通过FileProvider在应用间共享文件这篇文章](https://blog.csdn.net/lmj623565791/article/details/72859156)
 
+![path对应目录节点](./images/path-element.png)
+
 **2.SharedPreferences闪退**
 ```
 SharedPreferences read = getSharedPreferences(RELEASE_POOL_DATA, MODE_WORLD_READABLE);

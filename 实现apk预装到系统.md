@@ -20,6 +20,8 @@ chmod 755 system
 
 chmod 755 /system/app
 
+mkdir /system/app/demo
+
 chmod 755 /system/app/demo
 
 chmod 666 /system/app/demo/demo.apk
