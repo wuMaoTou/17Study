@@ -21,7 +21,7 @@ codeload.github.com
 添加下面查询到的IP到hosts文件中。。
 
 192.30.253.113 github.com
-151.101.25.194 github.global.ssl.fastly.net
+199.232.5.194 github.global.ssl.fastly.net
 192.30.253.121 codeload.github.com
 
 刷新DNS
