@@ -239,6 +239,18 @@ for (ResolveInfo resolveInfo : matchList) {
 }
 ```
 
+或者
+保留原来的静态广播，但是加入Component参数
+```
+Intent intent =new Intent( "com.example.wenhaibo.androidstudy_broadcast02.MY_BROADCAST" );
+
+intent.setComponent( new ComponentName( "com.example.wenhaibo.androidstudy_broadcast02" ,
+
+        "com.example.wenhaibo.androidstudy_broadcast02.MyBroadCastReceiver") );
+
+sendBroadcast( intent );
+```
+
 **6.Caused by: java.lang.IllegalStateException: Only fullscreen opaque activities can request orientation**
 Android 8.0 非全屏透明页面不允许设置方向,后面8.1系统谷歌就去掉了这个限制
 ```
@@ -342,6 +354,12 @@ Android 9.0 中为了改善应用稳定性和数据完整性，应用无法再�
 ```
 
 ## Android 10
+
+**requestLegacyExternalStorage 的前提下得到结论（官方还没完全开启限制的前提）：**
+1、targetSDK 用 28 编译的在 Android 10 上还是可以读取到全部文件，之后覆盖安装一个使用 targetSDK 29 的，还能继续可以访问全路径。
+2、卸载后直接用 targetSDK 29 编译的会读取不到。
+
+
 **1.Region.Op相关异常：java.lang.IllegalArgumentException: Invalid Region.Op - only INTERSECT and DIFFERENCE are allowed**
 当 targetSdkVersion >= Build.VERSION_CODES.P 时调用 canvas.clipPath(path, Region.Op.XXX); 引起的异常.
 解决方案如下，用Path.op代替，先运算Path，再给canvas.clipPath：
@@ -536,5 +554,6 @@ Android 9.0 中为了改善应用稳定性和数据完整性，应用无法再�
 
 资料内容:
 [Android6.0～9.0适配](https://juejin.im/post/5beaf27fe51d45332a4568e9)
+[Android10适配](https://juejin.im/post/5e564367e51d4526e807f0e4?utm_source=gold_browser_extension)
 [Android 版本适配：8.x Oreo（API 级别 26、27）](https://juejin.im/post/5cbc13696fb9a06886421c40)
 [Android 版本适配：9.0 Pie（API 级别 28）](https://juejin.im/post/5cbc146751882541625684bd?utm_source=gold_browser_extension)
