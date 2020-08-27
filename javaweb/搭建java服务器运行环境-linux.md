@@ -1,15 +1,15 @@
-1.°²×°jdk
-  -ÏÂÔØjdk linux°æ±¾(*.tar.gz)
+1.å®‰è£…jdk
+  -ä¸‹è½½jdk linuxç‰ˆæœ¬(*.tar.gz)
   https://www.oracle.com/cn/java/technologies/javase-jdk8-downloads.html
 
-  -Í¨¹ıftpÉÏ´«ÎÄ¼ş·şÎñÆ÷
+  -é€šè¿‡ftpä¸Šä¼ æ–‡ä»¶æœåŠ¡å™¨
 
-  -½âÑ¹jdk (/usr/local/src/java/)
+  -è§£å‹jdk (/usr/local/src/java/)
     `tar -zxvf jdk-8u181-linux-x64.tar.gz`
    
-  -ÅäÖÃ»·¾³±äÁ¿
-    ÆÕÍ¨ÓÃ»§ `vim ~/.bashrc` 
-    rootÓÃ»§ `vim /etc/profile`
+  -é…ç½®ç¯å¢ƒå˜é‡
+    æ™®é€šç”¨æˆ· `vim ~/.bashrc` 
+    rootç”¨æˆ· `vim /etc/profile`
     `
         export JAVA_HOME=/home/hjw/app/jdk1.8.0_181
 	export PATH=$JAVA_HOME/bin:$PATH
@@ -18,56 +18,105 @@
 	export JRE_HOME=$JAVA_HOME/jre
 	export CLASSPATH=.:$JAVA_LIB/tools.jar:$JAVA_LIB/dt.jar
     `
-    ÆÕÍ¨ÓÃ»§ `source ~/.bashrc` 
-    rootÓÃ»§ `v`sourceim /etc/profile`
+    æ™®é€šç”¨æˆ· `source ~/.bashrc` 
+    rootç”¨æˆ· `v`sourceim /etc/profile`
 
-  -ÃüÁîĞĞ²âÊÔ
+  -å‘½ä»¤è¡Œæµ‹è¯•
     `java -version`
 
-2.°²×°tomcat
-  -ÏÂÔØtomcat linux°æ±¾(*.tar.gz)
+2.å®‰è£…tomcat
+  -ä¸‹è½½tomcat linuxç‰ˆæœ¬(*.tar.gz)
   http://tomcat.apache.org/
 
-  -Í¨¹ıftpÉÏ´«ÎÄ¼ş·şÎñÆ÷
+  -é€šè¿‡ftpä¸Šä¼ æ–‡ä»¶æœåŠ¡å™¨
 
-  -½âÑ¹jdk (/usr/local/src/tomcat/)
+  -è§£å‹jdk (/usr/local/src/tomcat/)
     `tar -zxvf apache-tomcat-8.5.33.tar.gz`
 
-  -ÔËĞĞtomcat
+  -è¿è¡Œtomcat
     `./startup.sh`
   
-  -ä¯ÀÀÆ÷ÊäÈëhttp://¹«Íøip:8080²é¿´tomcatÖ÷Ò³Ãæ(·şÎñÆ÷°²È«×é¿ª·¢8080¶Ë¿Ú)
+  -æµè§ˆå™¨è¾“å…¥http://å…¬ç½‘ip:8080æŸ¥çœ‹tomcatä¸»é¡µé¢(æœåŠ¡å™¨å®‰å…¨ç»„å¼€å‘8080ç«¯å£)
 
-  -tomcat¿ª»ú×ÔÆô
-    ĞŞ¸Ä½Å±¾ÎÄ¼şrc.local£¬Õâ¸ö½Å±¾ÊÇÊ¹ÓÃÕß×Ô¶¨µÄ¿ª»úÆô¶¯³ÌĞò£¬¿ÉÒÔÔÚÀïÃæÌí¼ÓÏëÔÚÏµÍ³Æô¶¯Ö®ºóÖ´ĞĞµÄ½Å±¾»òÕß½Å±¾Ö´ĞĞÃüÁî
-    Ìí¼ÓÄÚÈİ
+  -tomcatå¼€æœºè‡ªå¯
+    ä¿®æ”¹è„šæœ¬æ–‡ä»¶rc.localï¼Œè¿™ä¸ªè„šæœ¬æ˜¯ä½¿ç”¨è€…è‡ªå®šçš„å¼€æœºå¯åŠ¨ç¨‹åºï¼Œå¯ä»¥åœ¨é‡Œé¢æ·»åŠ æƒ³åœ¨ç³»ç»Ÿå¯åŠ¨ä¹‹åæ‰§è¡Œçš„è„šæœ¬æˆ–è€…è„šæœ¬æ‰§è¡Œå‘½ä»¤
+    æ·»åŠ å†…å®¹
       `/usr/local/src/tomcat/apache-tomcat-8.5.34/bin/startup.sh`
-    ÊÚÈ¨
+    æˆæƒ
       chmod 777 /etc/rc.d/rc.local
 
-3.°²×°mysql
-  -ÃüÁîĞĞ°²×°mysql
-    `rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm`
+  -windows tomcatå¼€æœºè‡ªå¯
+	ä¸‹è½½å®‰è£…å®Œæˆtomcatå,cdåˆ°tomcatçš„binç›®å½•ä¸‹,æ‰§è¡ŒæœåŠ¡å®‰è£…å‘½ä»¤
+	  `service.bat install`
+	å‘½ä»¤å¯åŠ¨å®‰è£…å¥½çš„æœåŠ¡
+	  `net start tomcat8`
+	æŒ‰ä½win+Rå¹¶è¾“å…¥services.mscï¼Œæ‰¾åˆ°tomcat8æœåŠ¡å¹¶è®¾ç½®å±æ€§ä¸ºè‡ªåŠ¨å¯åŠ¨å³å¯ã€‚
+
+3.å®‰è£…mysql
+  -ä¸‹è½½å®‰è£…rpmæ–‡ä»¶(æ³¨æ„ä¿®æ”¹ç‰ˆæœ¬å·)
+	`rpm -Uvh http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm`
+
+  -æŸ¥çœ‹æ‰€æœ‰å‘è¡Œç‰ˆæœ¬
+	`yum repolist all | grep mysql`
+
+  -å·²ç”¨å’Œç¦ç”¨å®‰è£…ç‰ˆæœ¬
+	`sudo yum-config-manager --disable mysql80-community`
+	`sudo yum-config-manager --enable mysql57-community`
+
+  -å‘½ä»¤è¡Œå®‰è£…mysql
     `yum -y install mysql-community-server`
   
-  -¿ª»úÆô¶¯
+  -å¼€æœºå¯åŠ¨
     `systemctl enable mysqld`
 
-  -Æô¶¯mysql·şÎñ
+  -å¯åŠ¨mysqlæœåŠ¡
     `systemctl start mysqld`
 
-  -ÅäÖÃmysql
-    ÔËĞĞ `mysql_secure_installation`
-    ÌáÊ¾ Enter current password for root (enter for none):ÓÉÓÚÊÇ¸Õ¸Õ°²×°£¬Ö±½Ó°´»Ø³µÍ¨¹ı
-    `Set root password? [Y/n] y` ÊäÈëyÉèÖÃrootÃÜÂë
-    `Remove anonymous users? [Y/n] y` É¾³ıÄäÃûÓÃ»§
-    `Disallow root login remotely? [Y/n] y ` ½ûÖ¹rootÔ¶³ÌµÇÂ¼
-    `Remove test database and access to it? [Y/n] y ` É¾³ıtestÊı¾İ¿â
-    `Reload privilege tables now? [Y/n] y` Ë¢ĞÂÈ¨ÏŞ
-    Èç¹ûÔËĞĞÉÏÃæµÄÃüÁîÖĞÍ¾·¢Éú´íÎó£ºERROR 1558 (HY000): Column count of mysql.user is wrong. Expected 43, found 39.
-    ÔËĞĞ`mysql_upgrade -uroot -p`
+  -é…ç½®mysql
+    è¿è¡Œ `mysql_secure_installation`
+    æç¤º Enter current password for root (enter for none):ç”±äºæ˜¯åˆšåˆšå®‰è£…ï¼Œç›´æ¥æŒ‰å›è½¦é€šè¿‡
+    `Set root password? [Y/n] y` è¾“å…¥yè®¾ç½®rootå¯†ç 
+    `Remove anonymous users? [Y/n] y` åˆ é™¤åŒ¿åç”¨æˆ·
+    `Disallow root login remotely? [Y/n] y ` ç¦æ­¢rootè¿œç¨‹ç™»å½•
+    `Remove test database and access to it? [Y/n] y ` åˆ é™¤testæ•°æ®åº“
+    `Reload privilege tables now? [Y/n] y` åˆ·æ–°æƒé™
+    å¦‚æœè¿è¡Œä¸Šé¢çš„å‘½ä»¤ä¸­é€”å‘ç”Ÿé”™è¯¯ï¼šERROR 1558 (HY000): Column count of mysql.user is wrong. Expected 43, found 39.
+    è¿è¡Œ`mysql_upgrade -uroot -p`
    
-  -½øÈëmysql,¿ªÆôÔ¶³Ì·ÃÎÊÈ¨ÏŞ
-    `mysql -uroot -p+ÃÜÂë`
+  -è¿›å…¥mysql,å¼€å¯è¿œç¨‹è®¿é—®æƒé™
+    `mysql -uroot -p+å¯†ç `
     `use mysql;`
-    `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'ÃÜÂë' WITH GRANT OPTION;`
+    `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'å¯†ç ' WITH GRANT OPTION;`
+
+  **æ³¨:** 
+   1.å®‰è£…é”™è¯¯ï¼š
+
+      è½¯ä»¶åŒ…ï¼šmysql-community-server-5.7.20-1.el6.x86_64 (mysql57-community)
+      éœ€è¦ï¼šlibsasl2.so.2()(64bit)
+      è§£å†³æ–¹æ³•ï¼š
+      
+      ä¿®æ”¹vim /etc/yum.repos.d/mysql-community.repo æºæ–‡ä»¶
+      
+      [mysql57-community]
+      name=MySQL 5.7 Community Server
+      ## baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/ Â 
+      baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+      enabled=1
+      gpgcheck=0
+      gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysqlÂ  Â 
+
+   2.centOSåˆ é™¤mysql
+
+	  1ã€å¤‡ä»½æ•°æ®åº“ï¼Œå‡çº§MySQLé€šå¸¸ä¸ä¼šä¸¢å¤±æ•°æ®ï¼Œä½†ä¿é™©èµ·è§ï¼Œæˆ‘ä»¬éœ€è¦åšè¿™ä¸€æ­¥ã€‚è¾“å…¥å‘½ä»¤ï¼š
+		mysqldump -u xxx -h xxx -P 3306 -p --all-databases > databases.sql
+	  2ã€åœæ­¢MySQLæœåŠ¡ï¼Œè¾“å…¥å‘½ä»¤ï¼š
+		service mysqld stop
+	  3ã€å¸è½½æ—§ç‰ˆMySQLï¼Œè¾“å…¥å‘½ä»¤ï¼š
+		yum remove mysql mysql-*
+		æ‰§è¡Œè¿‡ç¨‹ä¸­ä¼šè¯¢é—®ä½ æ˜¯å¦ç§»é™¤ï¼Œæ­¤æ—¶è¾“å…¥â€œYâ€
+		æŸ¥çœ‹å·²å®‰è£…çš„è½¯ä»¶ï¼šrpm -qaÂ¦grep mysql
+		å¸è½½mysqlï¼šyum remove mysql mysql-server mysql-libs compat-mysql51
+	  4ã€ç§»é™¤å‘½ä»¤æ‰§è¡Œåï¼Œå¯å†çœ‹çœ‹æ˜¯å¦æœ‰æ®‹ä½™çš„mysqlï¼Œè¾“å…¥å‘½ä»¤ï¼š
+		yum list installed | grep mysql
+		å¦‚æœæœ‰ï¼Œå¯è¾“å…¥å‘½ä»¤åˆ é™¤ï¼š
+		yum remove mysqlï¼libs

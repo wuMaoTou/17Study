@@ -1,12 +1,12 @@
 我们可以通过修改hosts文件来提速,获取github的IP地址
 
-1.手动访问：https://www.ipaddress.com/ 网址，然后依次获取以下三个网址的IP
+1.手动访问：[DNS查询网站](http://tool.chinaz.com/dns/)，然后依次获取以下三个网址的IP
 
 github.com
-github.global.ssl.fastly.net
-codeload.github.com
+github.githubassets.com
+avatars0.githubusercontent.com
 
-这是我获取的IP
+选择TTL最大的IP，在hosts文件最后添加
 
 192.30.253.113 github.com
 151.101.25.194 github.global.ssl.fastly.net
@@ -20,9 +20,28 @@ codeload.github.com
 
 添加下面查询到的IP到hosts文件中。。
 
-192.30.253.113 github.com
-199.232.5.194 github.global.ssl.fastly.net
-192.30.253.121 codeload.github.com
+```
+# GitHub Start
+    192.30.253.113  github.com
+    185.199.109.154 github.githubassets.com
+    185.199.111.154 github.githubassets.com
+    203.98.7.65     gist.github.com
+    151.101.108.133 assets-cdn.github.com
+    151.101.108.133 raw.githubusercontent.com
+    151.101.108.133 gist.githubusercontent.com
+    151.101.108.133 cloud.githubusercontent.com
+    151.101.108.133 camo.githubusercontent.com
+    151.101.108.133 avatars0.githubusercontent.com
+    151.101.108.133 avatars1.githubusercontent.com
+    151.101.108.133 avatars2.githubusercontent.com
+    151.101.108.133 avatars3.githubusercontent.com
+    151.101.108.133 avatars4.githubusercontent.com
+    151.101.108.133 avatars5.githubusercontent.com
+    151.101.108.133 avatars6.githubusercontent.com
+    151.101.108.133 avatars7.githubusercontent.com
+    151.101.108.133 avatars8.githubusercontent.com
+# GitHub End
+```
 
 刷新DNS
 ipconfig /flushdns
