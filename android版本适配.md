@@ -537,23 +537,77 @@ Android 9.0 中为了改善应用稳定性和数据完整性，应用无法再�
 	});
 ```
 
-##另外适配
+
+
+## Android 10/11 存储适配建议
+
+**适配核心**
+
+分区存储是核心，App自身产生的文件应该存放在自己的目录下：
+
+> /sdcard/Android/data/packagename/ 和/data/data/packagename/
+
+这两个目录本App无需申请访问权限即可申请，其它App无法访问本App的目录。
+
+**适配共享存储**
+
+共享存储空间里的文件需要通过Uri构造输入输出流访问，Uri获取方式有两种：MediaStore和SAF。
+
+**适配其它目录**
+
+在Android 11上需要申请访问所有文件的权限。
+
+### **具体做法**
+
+**第一步**
+
+在AndroidManifest.xml里添加如下字段：
+权限声明：
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+```
+
+在<application>标签下添加如下字段：
+
+```xml
+android:requestLegacyExternalStorage="true"
+```
+
+**第二步**
+
+如果需要访问共享存储空间，则判断运行设备版本是否大于等于Android6.0，若是则需要申请WRITE_EXTERNAL_STORAGE 权限。拿到权限后，通过Uri访问共享存储空间里的文件。
+如果需要访问其它目录，则通过SAF访问
+
+**第三步**
+
+如果想要做文件管理器、病毒扫描管理器等功能。则判断运行设备版本是否大于等于Android 6.0，若是先需要申请普通的存储权。若运行设备版本为Android 10.0，则可以直接通过路径访问/sdcard/目录下文件(因为禁用了分区存储)；若运行设备版本为Android 11.0，则需要申请MANAGE_EXTERNAL_STORAGE 权限。
+
+以上是Android 存储权限适配的全部内容。
+
+本篇基于Android 10.0 11.0 。Android 10.0真机、Android 11.0模拟器
+测试代码(https://github.com/fishforest/AndroidDemo/tree/main/app/src/main/java/com/example/androiddemo/storagepermission)
+
+
+
+## 另外适配
 
 **1.全屏适配**
-```
-<application>
-<meta-data android:name="android.max_aspect"
-        android:value="2.1"/>
 
+```xml
+<application>
+<meta-data 
+        android:name="android.max_aspect"
+        android:value="2.1"/>
 </application>
 ```
 
 **2.Android 8.0的应用图标适配**
 使用AndroidStudio的ImageAsset工具生成图标
 
-
 资料内容:
 [Android6.0～9.0适配](https://juejin.im/post/5beaf27fe51d45332a4568e9)
 [Android10适配](https://juejin.im/post/5e564367e51d4526e807f0e4?utm_source=gold_browser_extension)
 [Android 版本适配：8.x Oreo（API 级别 26、27）](https://juejin.im/post/5cbc13696fb9a06886421c40)
 [Android 版本适配：9.0 Pie（API 级别 28）](https://juejin.im/post/5cbc146751882541625684bd?utm_source=gold_browser_extension)
+[Android 10、11 存储完全适配](https://mp.weixin.qq.com/s/rRltWQZORbbfAe8LjTpdSQ)
